@@ -14,10 +14,12 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import org.json.JSONObject;
@@ -34,56 +36,87 @@ public class TelaConsultaII extends JFrame {
     }
 
     private void initComponents() {
-        setTitle("Consulta CEP");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(450, 400);
-        setLocationRelativeTo(null);
-        setLayout(new GridBagLayout());
-        GridBagConstraints constraints = new GridBagConstraints();
-        constraints.insets = new Insets(5, 5, 5, 5);
-        
-        // Componentes da tela
-        JLabel labelCep = new JLabel("CEP:");
-        CepTxt = new JTextField(10);
-        CepTxtII = new JTextField(15);
-        logradouroTxt = new JTextField(15);
-        complementoTxt = new JTextField(15);
-        bairroTxt = new JTextField(15);
-        localidadeTxt = new JTextField(15);
-        ufTxt = new JTextField(5);
-        dddTxt = new JTextField(5);
+    setTitle("Consulta CEP");
+    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    setSize(450, 400);
+    setLocationRelativeTo(null);
+    setLayout(new GridBagLayout());
+    GridBagConstraints constraints = new GridBagConstraints();
+    constraints.insets = new Insets(5, 5, 5, 5);
 
-        buttonConsultar = new JButton("Consultar");
-        buttonConsultar.addActionListener(this::buttonConsultarActionPerformed);
-        
-        buttonHistorico = new JButton("Histórico");
-        buttonHistorico.addActionListener(this::buttonHistoricoActionPerformed);
-        
-        buttonLimpar = new JButton("Limpar");
-        buttonLimpar.addActionListener(this::buttonLimparActionPerformed);
-        
-        // Adicionando componentes usando GridBagLayout
-        addComponent(constraints, labelCep, 0, 0);
-        addComponent(constraints, CepTxt, 1, 0);
-        addComponent(constraints, new JLabel("CEP:"), 0, 1);
-        addComponent(constraints, CepTxtII, 1, 1);
-        addComponent(constraints, new JLabel("Logradouro:"), 0, 2);
-        addComponent(constraints, logradouroTxt, 1, 2);
-        addComponent(constraints, new JLabel("Complemento:"), 0, 3);
-        addComponent(constraints, complementoTxt, 1, 3);
-        addComponent(constraints, new JLabel("Bairro:"), 0, 4);
-        addComponent(constraints, bairroTxt, 1, 4);
-        addComponent(constraints, new JLabel("Localidade:"), 0, 5);
-        addComponent(constraints, localidadeTxt, 1, 5);
-        addComponent(constraints, new JLabel("UF:"), 0, 6);
-        addComponent(constraints, ufTxt, 1, 6);
-        addComponent(constraints, new JLabel("DDD:"), 0, 7);
-        addComponent(constraints, dddTxt, 1, 7);
-        addComponent(constraints, buttonConsultar, 0, 8);
-        addComponent(constraints, buttonHistorico, 1, 8);
-        addComponent(constraints, buttonLimpar, 0, 9);
-        
-        setVisible(true);
+    // Componentes da tela
+    JLabel labelCep = new JLabel("CEP:");
+    CepTxt = new JTextField(10);
+    CepTxtII = new JTextField(15);
+    logradouroTxt = new JTextField(15);
+    complementoTxt = new JTextField(15);
+    bairroTxt = new JTextField(15);
+    localidadeTxt = new JTextField(15);
+    ufTxt = new JTextField(5);
+    dddTxt = new JTextField(5);
+
+    buttonConsultar = new JButton("Consultar");
+    buttonConsultar.addActionListener(this::buttonConsultarActionPerformed);
+    
+    buttonHistorico = new JButton("Histórico");
+    buttonHistorico.addActionListener(this::buttonHistoricoActionPerformed);
+    
+    buttonLimpar = new JButton("Limpar");
+    buttonLimpar.addActionListener(this::buttonLimparActionPerformed);
+
+    // Adicionando componentes usando GridBagLayout
+    addComponent(constraints, labelCep, 0, 0);
+
+    // Colocando o campo CEP e os botões na mesma linha
+    constraints.gridx = 1;
+    constraints.gridy = 0;
+    constraints.gridwidth = 2;
+    constraints.fill = GridBagConstraints.HORIZONTAL;
+    add(CepTxt, constraints);
+
+    // Botões ao lado do campo CEP
+    constraints.gridx = 3;
+    constraints.gridwidth = 1;
+    constraints.fill = GridBagConstraints.HORIZONTAL;
+    add(buttonConsultar, constraints);
+
+    constraints.gridx = 4;
+    add(buttonHistorico, constraints);
+
+    constraints.gridx = 5;
+    add(buttonLimpar, constraints);
+
+    // Criando um JPanel para os resultados da busca
+    JPanel resultadoPanel = new JPanel();
+    resultadoPanel.setBorder(BorderFactory.createTitledBorder("Resultado"));
+    resultadoPanel.setLayout(new GridBagLayout()); // Usando GridBagLayout dentro do painel
+    GridBagConstraints resultConstraints = new GridBagConstraints();
+    resultConstraints.insets = new Insets(5, 5, 5, 5);
+    
+    // Adicionando os campos de resultado dentro do painel "Resultado"
+    addComponent(resultadoPanel, new JLabel("CEP:"), resultConstraints, 0, 0);
+    addComponent(resultadoPanel, CepTxtII, resultConstraints, 1, 0);
+    addComponent(resultadoPanel, new JLabel("Logradouro:"), resultConstraints, 0, 1);
+    addComponent(resultadoPanel, logradouroTxt, resultConstraints, 1, 1);
+    addComponent(resultadoPanel, new JLabel("Complemento:"), resultConstraints, 0, 2);
+    addComponent(resultadoPanel, complementoTxt, resultConstraints, 1, 2);
+    addComponent(resultadoPanel, new JLabel("Bairro:"), resultConstraints, 0, 3);
+    addComponent(resultadoPanel, bairroTxt, resultConstraints, 1, 3);
+    addComponent(resultadoPanel, new JLabel("Localidade:"), resultConstraints, 0, 4);
+    addComponent(resultadoPanel, localidadeTxt, resultConstraints, 1, 4);
+    addComponent(resultadoPanel, new JLabel("UF:"), resultConstraints, 0, 5);
+    addComponent(resultadoPanel, ufTxt, resultConstraints, 1, 5);
+    addComponent(resultadoPanel, new JLabel("DDD:"), resultConstraints, 0, 6);
+    addComponent(resultadoPanel, dddTxt, resultConstraints, 1, 6);
+
+    // Colocando o painel "Resultado" no GridBagLayout principal
+    constraints.gridx = 0;
+    constraints.gridy = 1;
+    constraints.gridwidth = 6; // Ocupa toda a largura
+    constraints.fill = GridBagConstraints.HORIZONTAL;
+    add(resultadoPanel, constraints);
+
+    setVisible(true);
     }
 
     private void addComponent(GridBagConstraints constraints, JLabel label, int x, int y) {
@@ -92,7 +125,7 @@ public class TelaConsultaII extends JFrame {
         constraints.fill = GridBagConstraints.HORIZONTAL;
         add(label, constraints);
     }
-    
+
     private void addComponent(GridBagConstraints constraints, JTextField textField, int x, int y) {
         constraints.gridx = x;
         constraints.gridy = y;
@@ -105,6 +138,20 @@ public class TelaConsultaII extends JFrame {
         constraints.gridy = y;
         constraints.fill = GridBagConstraints.HORIZONTAL;
         add(button, constraints);
+    }
+
+    private void addComponent(JPanel panel, JLabel label, GridBagConstraints constraints, int x, int y) {
+        constraints.gridx = x;
+        constraints.gridy = y;
+        constraints.fill = GridBagConstraints.HORIZONTAL;
+        panel.add(label, constraints);
+    }
+
+    private void addComponent(JPanel panel, JTextField textField, GridBagConstraints constraints, int x, int y) {
+        constraints.gridx = x;
+        constraints.gridy = y;
+        constraints.fill = GridBagConstraints.HORIZONTAL;
+        panel.add(textField, constraints);
     }
 
     private void buttonConsultarActionPerformed(ActionEvent evt) {
@@ -185,3 +232,4 @@ public class TelaConsultaII extends JFrame {
         new TelaConsultaII();
     }
 }
+
